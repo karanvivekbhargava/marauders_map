@@ -40,12 +40,39 @@
  * @brief      Constructs the object.
  */
 PathPlanner::PathPlanner() {
+  ROS_INFO("Creating the walker behaviour...");
+  // Set some parameters
+  linSpeed = 0.05;
+  turnSpeed = 0.2;
+  // Publish the velocity to cmd_vel_mux/input/navi
+  velocityPub = n.advertise <geometry_msgs::Twist> ("/cmd_vel_mux/input/navi",
+    1000);
+  // Define the initial velocity message
+  msg.linear.x = 0.0;
+  msg.linear.y = 0.0;
+  msg.linear.z = 0.0;
+  msg.angular.x = 0.0;
+  msg.angular.y = 0.0;
+  msg.angular.z = 0.0;
+  // stop the turtlebot
+  velocityPub.publish(msg);
+
+  diagnostic_ = true;
 }
 
 /**
  * @brief      Destroys the object.
  */
 PathPlanner::~PathPlanner() {
+  // Stop the turtlebot before exiting
+  msg.linear.x = 0.0;
+  msg.linear.y = 0.0;
+  msg.linear.z = 0.0;
+  msg.angular.x = 0.0;
+  msg.angular.y = 0.0;
+  msg.angular.z = 0.0;
+  // stop the turtlebot
+  velocityPub.publish(msg);
 }
 
 /**
@@ -54,8 +81,37 @@ PathPlanner::~PathPlanner() {
  * @param[in]  msg   The message
  */
 void PathPlanner::plan() {
+  // Set up the publisher rate to 10 Hz
+  ros::Rate loop_rate(10);
+  // Keep running till ros is running fine
+  while (ros::ok()) {
+    // Check for obstacle
+    if (obsDetector_.checkObstacle()) {
+      // Obstacle encountered
+      ROS_INFO("Obstacle present in path. Turning...");
+      // Stop the robot
+      msg.linear.x = 0.0;
+      // Turn the robot
+      msg.angular.z = turnSpeed;
+    } else {
+      ROS_INFO("Moving Forward...");
+      // Stop turning
+      msg.angular.z = 0.0;
+      // Set forward speed of the robot
+      msg.linear.x = linSpeed;
+    }
+
+    // Publish the twist message to anyone listening
+    velocityPub.publish(msg);
+
+    // "Spin" a callback in case we set up any callbacks
+    ros::spinOnce();
+
+    // Sleep for the remaining time until we hit our 10 Hz rate
+    loop_rate.sleep();
+  }
 }
 
 bool PathPlanner::selfDiagnosticTest() {
-  return false;
+  return diagnostic_;
 }
