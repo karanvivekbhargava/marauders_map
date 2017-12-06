@@ -40,6 +40,14 @@
  * @brief      Constructs the object.
  */
 ObsDetector::ObsDetector() {
+  ROS_INFO("Creating the obstacle detection behaviour...");
+  // initialise the collision flag to be false
+  collisionFlag_ = false;
+  // Subcribe to the /scan topic and use the laserCallback method
+  sub = n.subscribe <sensor_msgs::LaserScan> ("/scan", 500,
+    &ObsDetector::callback, this);
+
+  diagnostic_ = true;
 }
 
 /**
@@ -54,6 +62,13 @@ ObsDetector::~ObsDetector() {
  * @param[in]  msg   The message
  */
 void ObsDetector::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
+  for (int i = 0; i < msg->ranges.size(); ++i) {
+    if (msg->ranges[i] < 1.2) {
+      collisionFlag_ = true;
+      return;
+    }
+  }
+  collisionFlag_ = false;
 }
 
 /**
@@ -62,9 +77,9 @@ void ObsDetector::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
  * @return     boolean value for the collision flag
  */
 bool ObsDetector::checkObstacle() {
-  return false;
+  return collisionFlag_;
 }
 
 bool ObsDetector::selfDiagnosticTest() {
-  return false;
+  return diagnostic_;
 }
