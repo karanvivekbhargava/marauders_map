@@ -26,7 +26,7 @@ if(CATKIN_ENABLE_TESTING)
 
   add_rostest_gtest(
     pathPlannerTest
-    launch/pathPlannerTest.launch
+    test/pathPlannerTest.launch
     test/main.cpp
     test/pathPlannerTest.cpp
     test/obsDetectorTest.cpp

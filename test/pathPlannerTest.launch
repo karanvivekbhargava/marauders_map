@@ -1,0 +1,8 @@
+<launch>
+  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
+    <arg name="world_file" value="$(find marauders_map)/world/test.world"/>
+    <arg name="gui" value="0"/>
+  </include>
+  <node pkg="marauders_map" name="pathPlanner"  type="pathPlanner" />
+  <test pkg="marauders_map" test-name="pathPlannerTest" type="pathPlannerTest" />
+</launch>
