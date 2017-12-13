@@ -41,6 +41,8 @@
 #include "ros/ros.h"
 #include "sensor_msgs/LaserScan.h"
 
+#include "std_msgs/Float64.h"
+
 /**
  * @brief      Class for ObsDetector.
  */
@@ -55,6 +57,9 @@ class ObsDetector {
   // Subscribe to the laserscan topic to get obstacles
   ros::Subscriber sub;
 
+  ros::Subscriber distanceSub_;
+  ros::Publisher distancePub_;
+
  public:
   /**
    * @brief      Constructor for Walker
@@ -68,6 +73,8 @@ class ObsDetector {
    * @brief      Callback function for Walker
    */
   void callback(const sensor_msgs::LaserScan::ConstPtr& msg);
+
+  void callbackfloat(const std_msgs::Float64::ConstPtr& msg);
 
   /**
    * @brief      Checks for obstacles nearby

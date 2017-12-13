@@ -47,6 +47,13 @@ ObsDetector::ObsDetector() {
   sub = n.subscribe <sensor_msgs::LaserScan> ("/scan", 500,
     &ObsDetector::callback, this);
 
+
+  distancePub_ = n.advertise<std_msgs::Float64>("/min_distance", 1000);
+  distanceSub_ = n.subscribe<std_msgs::Float64>("/min_distance", 1000,
+    &ObsDetector::callbackfloat, this);
+
+
+
   diagnostic_ = true;
 }
 
@@ -62,11 +69,23 @@ ObsDetector::~ObsDetector() {
  * @param[in]  msg   The message
  */
 void ObsDetector::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
+  float minDist = 100;
   for (int i = 0; i < msg->ranges.size(); ++i) {
-    if (msg->ranges[i] < 1.2) {
-      collisionFlag_ = true;
-      return;
+    if(msg->ranges[i] < minDist) {
+      minDist = msg->ranges[i];
     }
+  }
+  // ROS_INFO("%.2f", minDist);
+  std_msgs::Float64 msgFloat;
+  msgFloat.data = minDist;
+  distancePub_.publish(msgFloat);
+}
+
+void ObsDetector::callbackfloat(const std_msgs::Float64::ConstPtr& msg) {
+  float minDist = 2;
+  if ((msg->data) < minDist) {
+    collisionFlag_ = true;
+    return;
   }
   collisionFlag_ = false;
 }

@@ -43,7 +43,7 @@ PathPlanner::PathPlanner() {
   ROS_INFO("Creating the walker behaviour...");
   // Set some parameters
   linSpeed = 0.05;
-  turnSpeed = 0.2;
+  turnSpeed = 0.05;
   // Publish the velocity to cmd_vel_mux/input/navi
   velocityPub = n.advertise <geometry_msgs::Twist> ("/cmd_vel_mux/input/navi",
     1000);
