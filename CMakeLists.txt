@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(marauders_map)
 
+add_definitions(-std=c++11)
+
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   move_base_msgs
@@ -23,6 +25,7 @@ target_link_libraries(pathPlanner
 
 if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")
 
   add_rostest_gtest(
     pathPlannerTest

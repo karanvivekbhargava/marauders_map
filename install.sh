@@ -6,7 +6,7 @@
 #If you have a fast machine with 4GB RAM or more, increase the
 #two occurences of "-j2" below to parallelize the compilation more
 
-USERNAME=karan
+USERNAME=$USER
 
 #Prepare System
 if test ! -d /opt/ros/kinetic; then
@@ -42,7 +42,7 @@ echo
 echo "Downloading, building and installing g2o"
 echo
 G2O_REPO_DIR=$SUBDIR/g2ofork
-git clone -b c++03 https://github.com/karanvivekbhargava/g2o.git $G2O_REPO_DIR
+git clone -b c++03 https://github.com/$USERvivekbhargava/g2o.git $G2O_REPO_DIR
 mkdir $G2O_REPO_DIR/build
 cd $G2O_REPO_DIR/build
 cmake .. -DCMAKE_INSTALL_PREFIX=$G2O_REPO_DIR/install -DG2O_BUILD_EXAMPLES=OFF
@@ -63,7 +63,7 @@ echo "Downloading rgbdslam_v2"
 echo
 #Get and build rgbdslam_v2
 export G2O_DIR=$G2O_REPO_DIR/install
-git clone -b kinetic https://github.com/karanvivekbhargava/rgbdslam_v2.git $WORKSPACE/src/rgbdslam
+git clone -b kinetic https://github.com/$USERvivekbhargava/rgbdslam_v2.git $WORKSPACE/src/rgbdslam
 
 #Install missing dependencies
 rosdep install rgbdslam

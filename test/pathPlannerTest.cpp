@@ -37,6 +37,12 @@
 #include <ros/ros.h>
 #include <gtest/gtest.h>
 #include "pathPlanner.hpp"
+#include "obsDetector.hpp"
+
+class TestClass{
+ public:
+  void dummyCallBack(const std_msgs::Float64::ConstPtr& msg) {}
+};
 
 /**
  * @brief      Tests whether collision flag is set to false
@@ -44,7 +50,27 @@
  * @param[in]  TESTSuite          gtest framework
  * @param[in]  sanityCheck        Name of the test
  */
-TEST(TESTSuite, pathPlannerSelfDiagnosticTest) {
+TEST(TESTSuite, PathPlannerSelfDiagnosticTest) {
   PathPlanner pathPlanner;
   EXPECT_EQ(pathPlanner.selfDiagnosticTest() , true);
+}
+
+TEST(TESTSuite, IntializationErrorTest) {
+  ros::NodeHandle n_;
+  EXPECT_NO_FATAL_FAILURE(PathPlanner pathPlanner);
+}
+
+TEST(TESTSuite, PathPlannerPublisherTest) {
+  ros::NodeHandle n_;
+  TestClass t;
+  ros::Subscriber sub = n_.subscribe("/min_distance", 1, &TestClass::dummyCallBack, &t);
+  ros::WallDuration(1).sleep();
+  EXPECT_EQ(sub.getNumPublishers(), 1);
+}
+
+TEST(TESTSuite, PathPlannerSubscriberTest) {
+  ros::NodeHandle n_;
+  ros::Publisher pub = n_.advertise<std_msgs::Float64>("/min_distance", 0);
+  ros::WallDuration(1).sleep();
+  EXPECT_EQ(pub.getNumSubscribers(), 1);
 }
