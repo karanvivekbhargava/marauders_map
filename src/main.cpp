@@ -26,11 +26,11 @@
  *  @author  Karan Vivek Bhargava
  *  @copyright MIT License
  *
- *  @brief Assignment to implement walker behavior for turtlebot
+ *  @brief Final Project - Marauders Map - Mapping an unknown environment
  *
  *  @section DESCRIPTION
  *
- *  This program will run the walker node for the turtlebot
+ *  This program will instantiate a path planning node
  *
  */
 
@@ -49,8 +49,7 @@ int main(int argc, char* argv[]) {
   ros::init(argc, argv, "pathPlanner");
   // Create the walker object
   PathPlanner pathPlanner;
-
+  // Call the plan function
   pathPlanner.plan();
-
   return 0;
 }

@@ -22,15 +22,11 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  *
- *  @file    talkerTest.cpp
- *  @author  Karan Vivek Bhargava
- *  @copyright MIT License
- *
- *  @brief Assignment to implement walker behavior for turtlebot
+ *  @brief Final Project - Marauders Map - Mapping an unknown environment
  *
  *  @section DESCRIPTION
  *
- *  This program will test the walker node for the turtlebot walker
+ *  This program will check the path planning operations for the turtlebot to check for collisions
  *
  */
 
@@ -39,27 +35,65 @@
 #include "pathPlanner.hpp"
 #include "obsDetector.hpp"
 
+/**
+ * @brief      Class for test class.
+ */
 class TestClass{
+
+ private:
+  bool collision = false;
+
  public:
-  void dummyCallBack(const std_msgs::Float64::ConstPtr& msg) {}
+  /**
+   * @brief      Create a dummy callback function
+   *
+   * @param[in]  msg   The message
+   */
+  void dummyCallBack(const std_msgs::Float64::ConstPtr& msg) {
+    if ( msg->data < 5 ) {
+      collision = true;
+    }
+  }
+
+  /**
+   * @brief      Gets the variable.
+   *
+   * @return     The variable.
+   */
+  bool getVar() {
+    return collision;
+  }
+
 };
 
 /**
- * @brief      Tests whether collision flag is set to false
+ * @brief      Test the self diagnostic
  *
- * @param[in]  TESTSuite          gtest framework
- * @param[in]  sanityCheck        Name of the test
+ * @param[in]  TESTSuite                            gtest framework
+ * @param[in]  PathPlannerSelfDiagnosticTest        Name of the test
  */
 TEST(TESTSuite, PathPlannerSelfDiagnosticTest) {
   PathPlanner pathPlanner;
   EXPECT_EQ(pathPlanner.selfDiagnosticTest() , true);
 }
 
+/**
+ * @brief      Test whether the program is starting properly
+ *
+ * @param[in]  TESTSuite                     gtest framework
+ * @param[in]  IntializationErrorTest        Name of the test
+ */
 TEST(TESTSuite, IntializationErrorTest) {
   ros::NodeHandle n_;
   EXPECT_NO_FATAL_FAILURE(PathPlanner pathPlanner);
 }
 
+/**
+ * @brief      Test whether the program's publisher is starting
+ *
+ * @param[in]  TESTSuite                       gtest framework
+ * @param[in]  PathPlannerPublisherTest        Name of the test
+ */
 TEST(TESTSuite, PathPlannerPublisherTest) {
   ros::NodeHandle n_;
   TestClass t;
@@ -68,6 +102,12 @@ TEST(TESTSuite, PathPlannerPublisherTest) {
   EXPECT_EQ(sub.getNumPublishers(), 1);
 }
 
+/**
+ * @brief      Test whether the program's subscriber is starting
+ *
+ * @param[in]  TESTSuite                       gtest framework
+ * @param[in]  PathPlannerSubscriberTest        Name of the test
+ */
 TEST(TESTSuite, PathPlannerSubscriberTest) {
   ros::NodeHandle n_;
   ros::Publisher pub = n_.advertise<std_msgs::Float64>("/min_distance", 0);

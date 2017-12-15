@@ -261,10 +261,10 @@
       <pose frame=''>-3.67806 0.069866 0 0 -0 1.5751</pose>
     </model>
     <state world_name='default'>
-      <sim_time>201 547000000</sim_time>
-      <real_time>201 991933560</real_time>
-      <wall_time>1513125516 607652064</wall_time>
-      <iterations>201547</iterations>
+      <sim_time>251 950000000</sim_time>
+      <real_time>50 510853636</real_time>
+      <wall_time>1513229671 710255695</wall_time>
+      <iterations>50403</iterations>
       <model name='grey_wall'>
         <pose frame=''>0.224082 3.0065 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -276,10 +276,10 @@
         </link>
       </model>
       <model name='grey_wall_0'>
-        <pose frame=''>4.15638 0.13332 0 0 -0 1.5751</pose>
+        <pose frame=''>1.40161 0.174251 0 0 -0 1.5751</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>4.15638 0.13332 1.4 0 -0 1.5751</pose>
+          <pose frame=''>1.40161 0.174251 1.4 0 -0 1.5751</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -321,7 +321,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>14.634 -12.3988 9.86309 0 0.275643 2.35619</pose>
+        <pose frame=''>12.2681 -14.7184 9.97878 0 0.275643 2.35619</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

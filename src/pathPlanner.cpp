@@ -45,18 +45,18 @@ PathPlanner::PathPlanner() {
   linSpeed = 0.05;
   turnSpeed = 0.05;
   // Publish the velocity to cmd_vel_mux/input/navi
-  velocityPub = n.advertise <geometry_msgs::Twist> ("/cmd_vel_mux/input/navi",
+  velocityPub_ = n_.advertise <geometry_msgs::Twist> ("/cmd_vel_mux/input/navi",
     1000);
   // Define the initial velocity message
-  msg.linear.x = 0.0;
-  msg.linear.y = 0.0;
-  msg.linear.z = 0.0;
-  msg.angular.x = 0.0;
-  msg.angular.y = 0.0;
-  msg.angular.z = 0.0;
-  // stop the turtlebot
-  velocityPub.publish(msg);
-
+  msg_.linear.x = 0.0;
+  msg_.linear.y = 0.0;
+  msg_.linear.z = 0.0;
+  msg_.angular.x = 0.0;
+  msg_.angular.y = 0.0;
+  msg_.angular.z = 0.0;
+  // Stop the turtlebot
+  velocityPub_.publish(msg_);
+  // Set the self diagnostic variable
   diagnostic_ = true;
 }
 
@@ -65,14 +65,14 @@ PathPlanner::PathPlanner() {
  */
 PathPlanner::~PathPlanner() {
   // Stop the turtlebot before exiting
-  msg.linear.x = 0.0;
-  msg.linear.y = 0.0;
-  msg.linear.z = 0.0;
-  msg.angular.x = 0.0;
-  msg.angular.y = 0.0;
-  msg.angular.z = 0.0;
+  msg_.linear.x = 0.0;
+  msg_.linear.y = 0.0;
+  msg_.linear.z = 0.0;
+  msg_.angular.x = 0.0;
+  msg_.angular.y = 0.0;
+  msg_.angular.z = 0.0;
   // stop the turtlebot
-  velocityPub.publish(msg);
+  velocityPub_.publish(msg_);
 }
 
 /**
@@ -90,19 +90,19 @@ void PathPlanner::plan() {
       // Obstacle encountered
       ROS_INFO("Obstacle present in path. Turning...");
       // Stop the robot
-      msg.linear.x = 0.0;
+      msg_.linear.x = 0.0;
       // Turn the robot
-      msg.angular.z = turnSpeed;
+      msg_.angular.z = turnSpeed_;
     } else {
       ROS_INFO("Moving Forward...");
       // Stop turning
-      msg.angular.z = 0.0;
+      msg_.angular.z = 0.0;
       // Set forward speed of the robot
-      msg.linear.x = linSpeed;
+      msg_.linear.x = linSpeed_;
     }
 
     // Publish the twist message to anyone listening
-    velocityPub.publish(msg);
+    velocityPub_.publish(msg_);
 
     // "Spin" a callback in case we set up any callbacks
     ros::spinOnce();

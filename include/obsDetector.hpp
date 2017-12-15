@@ -40,7 +40,6 @@
 #include <iostream>
 #include "ros/ros.h"
 #include "sensor_msgs/LaserScan.h"
-
 #include "std_msgs/Float64.h"
 
 /**
@@ -53,16 +52,16 @@ class ObsDetector {
   // Self diagnostic
   bool diagnostic_;
   // Create a node handle
-  ros::NodeHandle n;
+  ros::NodeHandle n_;
   // Subscribe to the laserscan topic to get obstacles
-  ros::Subscriber sub;
-
+  ros::Subscriber sub_;
+  // Intermediate subcriber and publisher for the minimum distance
   ros::Subscriber distanceSub_;
   ros::Publisher distancePub_;
 
  public:
   /**
-   * @brief      Constructor for Walker
+   * @brief      Constructor for object
    */
   ObsDetector();
   /**
@@ -70,10 +69,17 @@ class ObsDetector {
    */
   ~ObsDetector();
   /**
-   * @brief      Callback function for Walker
+   * @brief      Callback function for laserscan
+   *
+   * @param[in]  msg   The message
    */
   void callback(const sensor_msgs::LaserScan::ConstPtr& msg);
 
+  /**
+   * @brief      Callback function for minimum distance
+   *
+   * @param[in]  msg   The message
+   */
   void callbackfloat(const std_msgs::Float64::ConstPtr& msg);
 
   /**
@@ -84,6 +90,11 @@ class ObsDetector {
    */
   bool checkObstacle();
 
+  /**
+   * @brief      Gives the diagnostic
+   *
+   * @return     Gives self diagnostic boolean variables
+   */
   bool selfDiagnosticTest();
 };
 

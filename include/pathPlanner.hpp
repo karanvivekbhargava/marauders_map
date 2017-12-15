@@ -30,7 +30,7 @@
  *
  *  @section DESCRIPTION
  *
- *  This program will perform laserscan for the turtlebot to check for collisions
+ *  This program will perform path planning operations for the turtlebot to check for collisions
  *
  */
 
@@ -41,42 +41,42 @@
 #include "obsDetector.hpp"
 
 /**
- * @brief      Class for ObsDetector.
+ * @brief      Class for PathPlanner.
  */
 class PathPlanner {
  private:
-
+  // Create ObsDetector
   ObsDetector obsDetector_;
   // Self diagnostic
   bool diagnostic_;
   // Declare a variable for the velocities
-  geometry_msgs::Twist msg;
+  geometry_msgs::Twist msg_;
   // Create a node handle
-  ros::NodeHandle n;
+  ros::NodeHandle n_;
   // Publish the "velocity" topic to the turtlebot
-  ros::Publisher velocityPub;
+  ros::Publisher velocityPub_;
   // Define the linear and turn speeds
-  float linSpeed;
-  float turnSpeed;
+  float linSpeed_;
+  float turnSpeed_;
 
  public:
   /**
-   * @brief      Constructor for Walker
+   * @brief      Constructor for object
    */
   PathPlanner();
   /**
    * @brief      Destroys the object.
    */
   ~PathPlanner();
-
   /**
-   * @brief      Checks for obstacles nearby
-   *
-   * @return     Boolean value 1 if any obstacles are nearby,
-   *             0 otherwise
+   * @brief      Plans the next action
    */
   void plan();
-
+  /**
+   * @brief      Gives the diagnostic
+   *
+   * @return     Gives self diagnostic boolean variables
+   */
   bool selfDiagnosticTest();
 };
 

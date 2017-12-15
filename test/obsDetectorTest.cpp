@@ -48,3 +48,21 @@ TEST(TESTSuite, obsDetectorSelfDiagnosticTest) {
   ObsDetector obsDetector;
   EXPECT_EQ(obsDetector.selfDiagnosticTest() , true);
 }
+
+/**
+ * @brief      Tests the distance topic after 20 seconds
+ *
+ * @param[in]  TESTSuite                      gtest framework
+ * @param[in]  obsDetectorDistanceTest        Name of the test
+ */
+TEST(TESTSuite, obsDetectorDistanceTest) {
+  ObsDetector obsDetector;
+  ros::NodeHandle n_;
+
+  ros::WallDuration(20).sleep();
+
+  ros::spinOnce();
+
+  EXPECT_EQ( obsDetector.checkObstacle(), true);
+}
+

@@ -44,16 +44,13 @@ ObsDetector::ObsDetector() {
   // initialise the collision flag to be false
   collisionFlag_ = false;
   // Subcribe to the /scan topic and use the laserCallback method
-  sub = n.subscribe <sensor_msgs::LaserScan> ("/scan", 500,
+  sub_ = n_.subscribe <sensor_msgs::LaserScan> ("/scan", 500,
     &ObsDetector::callback, this);
-
-
-  distancePub_ = n.advertise<std_msgs::Float64>("/min_distance", 1000);
-  distanceSub_ = n.subscribe<std_msgs::Float64>("/min_distance", 1000,
+  // Publish and subscribe to the intermediate topics
+  distancePub_ = n_.advertise<std_msgs::Float64>("/min_distance", 1000);
+  distanceSub_ = n_.subscribe<std_msgs::Float64>("/min_distance", 1000,
     &ObsDetector::callbackfloat, this);
-
-
-
+  // Set the value for the self diagnostic
   diagnostic_ = true;
 }
 
@@ -70,9 +67,9 @@ ObsDetector::~ObsDetector() {
  */
 void ObsDetector::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
   float minDist = 100;
-  for (int i = 0; i < msg->ranges.size(); ++i) {
-    if(msg->ranges[i] < minDist) {
-      minDist = msg->ranges[i];
+  for (const auto& i : msg->ranges) {
+    if(i < minDist) {
+      minDist = i;
     }
   }
   // ROS_INFO("%.2f", minDist);
@@ -80,7 +77,11 @@ void ObsDetector::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
   msgFloat.data = minDist;
   distancePub_.publish(msgFloat);
 }
-
+/**
+ * @brief      Callback for the minimum distance topic
+ *
+ * @param[in]  msg   The message
+ */
 void ObsDetector::callbackfloat(const std_msgs::Float64::ConstPtr& msg) {
   float minDist = 2;
   if ((msg->data) < minDist) {
@@ -99,6 +100,11 @@ bool ObsDetector::checkObstacle() {
   return collisionFlag_;
 }
 
+/**
+* @brief      Gives the diagnostic
+*
+* @return     Gives self diagnostic boolean variables
+*/
 bool ObsDetector::selfDiagnosticTest() {
   return diagnostic_;
 }
