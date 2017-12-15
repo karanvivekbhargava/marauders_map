@@ -63,6 +63,6 @@ TEST(TESTSuite, obsDetectorDistanceTest) {
 
   ros::spinOnce();
 
-  EXPECT_EQ( obsDetector.checkObstacle(), true);
+  EXPECT_EQ(obsDetector.checkObstacle(), true);
 }
 

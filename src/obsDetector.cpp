@@ -68,7 +68,7 @@ ObsDetector::~ObsDetector() {
 void ObsDetector::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
   float minDist = 100;
   for (const auto& i : msg->ranges) {
-    if(i < minDist) {
+    if (i < minDist) {
       minDist = i;
     }
   }

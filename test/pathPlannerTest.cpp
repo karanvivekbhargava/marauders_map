@@ -39,7 +39,6 @@
  * @brief      Class for test class.
  */
 class TestClass{
-
  private:
   bool collision = false;
 
@@ -63,7 +62,6 @@ class TestClass{
   bool getVar() {
     return collision;
   }
-
 };
 
 /**
@@ -97,7 +95,8 @@ TEST(TESTSuite, IntializationErrorTest) {
 TEST(TESTSuite, PathPlannerPublisherTest) {
   ros::NodeHandle n_;
   TestClass t;
-  ros::Subscriber sub = n_.subscribe("/min_distance", 1, &TestClass::dummyCallBack, &t);
+  ros::Subscriber sub = n_.subscribe("/min_distance", 1,
+    &TestClass::dummyCallBack, &t);
   ros::WallDuration(1).sleep();
   EXPECT_EQ(sub.getNumPublishers(), 1);
 }
