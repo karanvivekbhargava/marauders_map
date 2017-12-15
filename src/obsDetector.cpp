@@ -72,7 +72,6 @@ void ObsDetector::callback(const sensor_msgs::LaserScan::ConstPtr& msg) {
       minDist = i;
     }
   }
-  // ROS_INFO("%.2f", minDist);
   std_msgs::Float64 msgFloat;
   msgFloat.data = minDist;
   distancePub_.publish(msgFloat);
