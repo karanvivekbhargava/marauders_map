@@ -1,0 +1,145 @@
+\hypertarget{class_obs_detector}{}\section{Obs\+Detector Class Reference}
+\label{class_obs_detector}\index{Obs\+Detector@{Obs\+Detector}}
+
+
+Class for \hyperlink{class_obs_detector}{Obs\+Detector}.  
+
+
+
+
+{\ttfamily \#include $<$obs\+Detector.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_obs_detector_a8c558094b5f5cf6301131012b4bb967d}{Obs\+Detector} ()
+\begin{DoxyCompactList}\small\item\em Constructor for object. \end{DoxyCompactList}\item 
+\hyperlink{class_obs_detector_a15bf3a79d3f9d48777fc02ab1c5a2ef2}{$\sim$\+Obs\+Detector} ()\hypertarget{class_obs_detector_a15bf3a79d3f9d48777fc02ab1c5a2ef2}{}\label{class_obs_detector_a15bf3a79d3f9d48777fc02ab1c5a2ef2}
+
+\begin{DoxyCompactList}\small\item\em Destroys the object. \end{DoxyCompactList}\item 
+void \hyperlink{class_obs_detector_a9a1e78609077454c2a7f6b2140b21dbd}{callback} (const sensor\+\_\+msgs\+::\+Laser\+Scan\+::\+Const\+Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em Callback function for laserscan. \end{DoxyCompactList}\item 
+void \hyperlink{class_obs_detector_a184c914ee70ead017627268fe4260576}{callbackfloat} (const std\+\_\+msgs\+::\+Float64\+::\+Const\+Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em Callback function for minimum distance. \end{DoxyCompactList}\item 
+bool \hyperlink{class_obs_detector_a43ec2e5144aae0649449ed5dea446229}{check\+Obstacle} ()
+\begin{DoxyCompactList}\small\item\em Checks for obstacles nearby. \end{DoxyCompactList}\item 
+bool \hyperlink{class_obs_detector_ae2ba5b25de3610f0d233f830400f7c1c}{self\+Diagnostic\+Test} ()
+\begin{DoxyCompactList}\small\item\em Gives the diagnostic. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for \hyperlink{class_obs_detector}{Obs\+Detector}. 
+
+Definition at line 48 of file obs\+Detector.\+hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Obs\+Detector@{Obs\+Detector}!Obs\+Detector@{Obs\+Detector}}
+\index{Obs\+Detector@{Obs\+Detector}!Obs\+Detector@{Obs\+Detector}}
+\subsubsection[{\texorpdfstring{Obs\+Detector()}{ObsDetector()}}]{\setlength{\rightskip}{0pt plus 5cm}Obs\+Detector\+::\+Obs\+Detector (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_obs_detector_a8c558094b5f5cf6301131012b4bb967d}{}\label{class_obs_detector_a8c558094b5f5cf6301131012b4bb967d}
+
+
+Constructor for object. 
+
+Constructs the object. 
+
+Definition at line 42 of file obs\+Detector.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\index{Obs\+Detector@{Obs\+Detector}!callback@{callback}}
+\index{callback@{callback}!Obs\+Detector@{Obs\+Detector}}
+\subsubsection[{\texorpdfstring{callback(const sensor\+\_\+msgs\+::\+Laser\+Scan\+::\+Const\+Ptr \&msg)}{callback(const sensor_msgs::LaserScan::ConstPtr &msg)}}]{\setlength{\rightskip}{0pt plus 5cm}void Obs\+Detector\+::callback (
+\begin{DoxyParamCaption}
+\item[{const sensor\+\_\+msgs\+::\+Laser\+Scan\+::\+Const\+Ptr \&}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{class_obs_detector_a9a1e78609077454c2a7f6b2140b21dbd}{}\label{class_obs_detector_a9a1e78609077454c2a7f6b2140b21dbd}
+
+
+Callback function for laserscan. 
+
+Callback for the laser scan data.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em msg} & The message \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 68 of file obs\+Detector.\+cpp.
+
+\index{Obs\+Detector@{Obs\+Detector}!callbackfloat@{callbackfloat}}
+\index{callbackfloat@{callbackfloat}!Obs\+Detector@{Obs\+Detector}}
+\subsubsection[{\texorpdfstring{callbackfloat(const std\+\_\+msgs\+::\+Float64\+::\+Const\+Ptr \&msg)}{callbackfloat(const std_msgs::Float64::ConstPtr &msg)}}]{\setlength{\rightskip}{0pt plus 5cm}void Obs\+Detector\+::callbackfloat (
+\begin{DoxyParamCaption}
+\item[{const std\+\_\+msgs\+::\+Float64\+::\+Const\+Ptr \&}]{msg}
+\end{DoxyParamCaption}
+)}\hypertarget{class_obs_detector_a184c914ee70ead017627268fe4260576}{}\label{class_obs_detector_a184c914ee70ead017627268fe4260576}
+
+
+Callback function for minimum distance. 
+
+Callback for the minimum distance topic.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em msg} & The message \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 84 of file obs\+Detector.\+cpp.
+
+\index{Obs\+Detector@{Obs\+Detector}!check\+Obstacle@{check\+Obstacle}}
+\index{check\+Obstacle@{check\+Obstacle}!Obs\+Detector@{Obs\+Detector}}
+\subsubsection[{\texorpdfstring{check\+Obstacle()}{checkObstacle()}}]{\setlength{\rightskip}{0pt plus 5cm}bool Obs\+Detector\+::check\+Obstacle (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_obs_detector_a43ec2e5144aae0649449ed5dea446229}{}\label{class_obs_detector_a43ec2e5144aae0649449ed5dea446229}
+
+
+Checks for obstacles nearby. 
+
+Returns the collision flag.
+
+\begin{DoxyReturn}{Returns}
+Boolean value 1 if any obstacles are nearby, 0 otherwise
+
+boolean value for the collision flag 
+\end{DoxyReturn}
+
+
+Definition at line 98 of file obs\+Detector.\+cpp.
+
+\index{Obs\+Detector@{Obs\+Detector}!self\+Diagnostic\+Test@{self\+Diagnostic\+Test}}
+\index{self\+Diagnostic\+Test@{self\+Diagnostic\+Test}!Obs\+Detector@{Obs\+Detector}}
+\subsubsection[{\texorpdfstring{self\+Diagnostic\+Test()}{selfDiagnosticTest()}}]{\setlength{\rightskip}{0pt plus 5cm}bool Obs\+Detector\+::self\+Diagnostic\+Test (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_obs_detector_ae2ba5b25de3610f0d233f830400f7c1c}{}\label{class_obs_detector_ae2ba5b25de3610f0d233f830400f7c1c}
+
+
+Gives the diagnostic. 
+
+\begin{DoxyReturn}{Returns}
+Gives self diagnostic boolean variables 
+\end{DoxyReturn}
+
+
+Definition at line 107 of file obs\+Detector.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/karan/catkin\+\_\+ws/src/marauders\+\_\+map/include/\hyperlink{obs_detector_8hpp}{obs\+Detector.\+hpp}\item 
+/home/karan/catkin\+\_\+ws/src/marauders\+\_\+map/src/\hyperlink{obs_detector_8cpp}{obs\+Detector.\+cpp}\end{DoxyCompactItemize}

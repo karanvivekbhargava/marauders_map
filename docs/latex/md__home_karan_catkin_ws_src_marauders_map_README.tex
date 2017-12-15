@@ -1,0 +1,196 @@
+\section*{Marauders Map }
+
+\href{https://travis-ci.org/karanvivekbhargava/marauders_map}{\tt } \href{https://coveralls.io/github/karanvivekbhargava/marauders_map?branch=master}{\tt } \href{https://opensource.org/licenses/MIT}{\tt Overview The Marauders Map product by Acme Robotics is one of its flagship products. It performs best for an indoor environment where you need to map an environment. It is a turtlebot package which utilizes rgbdslam\+\_\+v2 ros package and an exploratory behaviour to map indoor environments to an octree format. License This project is under the M\+IT License}.
+
+\subsection*{S\+IP process}
+
+Since this project was built alone, I have followed the solo iterative process (S\+IP).
+
+Log details for the same can be found \href{https://docs.google.com/spreadsheets/d/1UN-LUKyeZunZTpRnJA9aYaXh8SntVCdyPhzmPg2l0AY/edit#gid=0}{\tt here}
+
+Planning notes can be found \href{https://docs.google.com/document/d/1BU2oDnlLBrMnNgZKm1wX3ZKhkwUWr54Su3-iXXmer3M/edit?usp=sharing}{\tt here}
+
+\subsection*{Dependencies}
+
+This project is dependent on\+:
+\begin{DoxyItemize}
+\item R\+OS Kinetic Kame
+\item Turtlebot R\+OS packages
+\item \href{https://github.com/felixendres/rgbdslam_v2}{\tt rgbdslam\+\_\+v2} R\+OS package
+\item Ubuntu 16.\+04
+\item octovis \href{used to view .ot files}{\tt O\+P\+T\+I\+O\+N\+AL}
+\end{DoxyItemize}
+
+You may install rgbdslam\+\_\+v2 from this \href{https://github.com/felixendres/rgbdslam_v2}{\tt link}. However I\textquotesingle{}ve found some bugs in the code and have solved the same on my forked repository of rgbdslam\+\_\+v2. I highly recommend to use the installation script given in this repository to install the same.
+
+For ease of installation, I\textquotesingle{}ve modified the script from the main repository. This solves some of the commonly faced bugs during installation. To run the script follow the instructions below.
+
+
+\begin{DoxyCode}
+1 cd <path to repository>
+2 chmod +x install.sh
+3 ./install.sh
+\end{DoxyCode}
+
+
+This should start installing rgbdslam and all its dependencies in a pain free manner. After it\textquotesingle{}s installed you need to source as follows.
+
+
+\begin{DoxyCode}
+1 source ~/Code/rgbdslam\_catkin\_ws/devel/setup.bash
+\end{DoxyCode}
+
+
+Now you\textquotesingle{}re all set to use rgbdslam with the turtlebot!
+
+\subsection*{How does this work?}
+
+The activity diagram below contains a basic explanation of how the package is working. It has a node by the name {\ttfamily \hyperlink{class_path_planner}{Path\+Planner}}. This node operates in the manner shown below. It keeps running and exploring the map using a simple algorithm till the user is satisfied with the map.
+
+It uses the laserscan data to move around the environment. The robot goes straight till it encounters an obstacle which is nearer to it than a given threshold. The minimum distance from the laserscan data is published on the /min\+Distance topic. If there is an obstacle in the vicinity then the robot keeps turning till it finds a way to move forward again.
+
+Once the user is satisfied with the map. They save the map using a service which is described below and kill the node. This is what is described in the activity diagram below.
+
+$<$img src = \char`\"{}\+U\+M\+L/\+Final/explorer-\/activity\+\_\+diagram.\+jpg\char`\"{} \begin{quote}
+
+
+\end{quote}
+
+
+\subsection*{Build Instructions}
+
+To build the ros node, follow the instructions given below.
+
+
+\begin{DoxyCode}
+1 mkdir -p ~/catkin\_ws/src
+2 cd ~/catkin\_ws/
+3 catkin\_make
+4 source devel/setup.bash
+5 cd src/
+6 git clone --recursive https://github.com/karanvivekbhargava/marauders\_map.git
+7 cd ..
+8 catkin\_make
+\end{DoxyCode}
+
+
+\subsection*{Running rostest}
+
+The unit tests have been written using gtest and rostest. To run the tests, you need to be in the catkin workspace parent folder. Then run the commands below
+
+
+\begin{DoxyCode}
+1 cd <path to catkin workspace>
+2 catkin\_make run\_tests
+\end{DoxyCode}
+ You can test using 
+\begin{DoxyCode}
+1 rostest marauders\_map pathPlannerTest.launch
+\end{DoxyCode}
+
+
+\subsection*{Run Steps}
+
+To run the package with gazebo rendered custom world, you need to first build the project and then follow the instructions below.
+
+
+\begin{DoxyCode}
+1 source ~/Code/rgbdslam\_catkin\_ws/devel/setup.bash
+2 cd <path to catkin workspace>
+3 source devel/setup.bash
+4 roslaunch marauders\_map demo.launch
+\end{DoxyCode}
+
+
+You will see several windows opening up. A new terminal will open up which will inform how the exploration package is moving. A new window for rgbdslam\+\_\+v2 will open up and the gazebo environment will load up as well.
+
+
+
+When the gazebo world is loaded, the turtlebot will start to turn. It will drive forward until it encounters an obstacle, at which point it will stop, turn in place until it sees no obstacle, and then continue to drive forward. This is maybe considered a \char`\"{}dumb\char`\"{} way to navigate, but in the desired use cases, the area may be completely unknown and the robot\textquotesingle{}s task is to collect as much information as it can about its surrounding environment.
+
+\subsection*{Saving the map}
+
+Once you think you are satisfied with the map in the rgbdslam window after launching as instructed above, you have to run a service which will save the map.
+
+Open a new terminal and source the rgbdslam as follows
+
+
+\begin{DoxyCode}
+1 source ~/Code/rgbdslam\_catkin\_ws/devel/setup.bash
+\end{DoxyCode}
+
+
+Then we will call the rgbdslam service to save the octree map.
+
+
+\begin{DoxyCode}
+1 rosservice call /rgbdslam/ros\_ui\_s save\_octomap ~/savedEnvironment.ot
+\end{DoxyCode}
+
+
+You can change the path of {\ttfamily $\sim$/saved\+Environment.ot} to any other filename or path that you\textquotesingle{}d like.
+
+\mbox{[}N\+O\+TE \+: Do not call this service more than three times. I\textquotesingle{}ve encountered an issue for the same. If you do this for more times then rgbdslam gives a process died error and exits\mbox{]}
+
+\subsection*{Viewing the map \mbox{[}O\+P\+T\+I\+O\+N\+AL\mbox{]}}
+
+Since the output of the map is octree (.ot file), we can use the \href{http://wiki.ros.org/octovis}{\tt octovis} package to view the output.
+
+This can be installed by running the following command. However I haven\textquotesingle{}t completely tested it without installing octomap and the likes.
+
+
+\begin{DoxyCode}
+1 sudo apt-get install ros-kinetic-octovis
+\end{DoxyCode}
+
+
+You would have to run the following command to view the result
+
+
+\begin{DoxyCode}
+1 octovis ~/savedEnvironment.ot
+\end{DoxyCode}
+
+
+Kindly change the path accordingly if you changed it in the previous step.
+
+\subsection*{Record rosbag}
+
+To record rosbag you need to run the following
+
+
+\begin{DoxyCode}
+1 roslaunch marauders\_map demo.launch record:=true
+\end{DoxyCode}
+
+
+This will record a rosbag file into the results directory of this package.
+
+\mbox{[}N\+O\+TE\+: This launch file will not record camera data, like R\+GB images and depth images, because the file size will become too large too quickly. If camera data is needed, rosbag will have to be run separately in another terminal.\mbox{]}
+
+\subsection*{Playback of rosbag}
+
+To play the recorded data follow the instructions below after starting a roscore command in a new terminal.
+
+
+\begin{DoxyCode}
+1 cd <path to repository>/results
+2 rosbag play marauders\_map.bag
+\end{DoxyCode}
+
+
+\mbox{[}N\+O\+TE\+: Gazebo should not be running when playing back with rosbag.\mbox{]}
+
+\subsection*{Doxygen Documentation}
+
+Although the repository contains the documentation, if you\textquotesingle{}d still like to generate it then follow the instructions below.
+
+
+\begin{DoxyCode}
+1 sudo apt-get install doxygen
+2 sudo apt-get install doxywizard
+3 doxywizard
+\end{DoxyCode}
+
+
+Once doxywizard is open, select the workspace as the repository. Fill in the details as required and set the source code folder to the repository as well. Create a new folder in the repository and select that as the destination directory. Proceed with the default settings and generate the documentation. 
