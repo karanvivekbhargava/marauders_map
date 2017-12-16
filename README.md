@@ -14,6 +14,15 @@
 
 The Marauders Map product by Acme Robotics is one of its flagship products. It performs best for an indoor environment where you need to map an environment. It is a turtlebot package which utilizes rgbdslam_v2 ros package and an exploratory behaviour to map indoor environments to an octree format.
 
+## Presentation
+
+* Presentation Video - [Part1 - Presentation](https://youtu.be/TvFB_l5aCFY) |
+[Part2 - Building the package](https://youtu.be/Tp4NYCJdwpc) |
+[Part3 - Demo](https://youtu.be/Ri_JPX9VeVQ) |
+[Part4 - Saving the map](https://youtu.be/-jnuzKKivpw)
+
+* Slides for the presentation - [Link](https://docs.google.com/presentation/d/1jOvHF_m62kyigsD6PYRRy_OjW8tAaorLsjbT8j2ff8U/edit?usp=sharing)
+
 ## License
 
 This project is under the [MIT License](https://github.com/karanvivekbhargava/marauders_map/blob/master/LICENSE).
@@ -129,7 +138,7 @@ rosservice call /rgbdslam/ros_ui_s save_octomap ~/savedEnvironment.ot
 
 You can change the path of `~/savedEnvironment.ot` to any other filename or path that you'd like.
 
-[NOTE : Do not call this service more than three times. I've encountered an issue for the same. If you do this for more times then rgbdslam gives a process died error and exits]
+>[NOTE : Do not call this service more than three times. I've encountered an issue for the same. If you do this for more times then rgbdslam gives a process died error and exits]
 
 ## Viewing the map [OPTIONAL]
 
@@ -160,7 +169,7 @@ roslaunch marauders_map demo.launch record:=true
 
 This will record a rosbag file into the results directory of this package.
 
-[NOTE: This launch file will not record camera data, like RGB images and depth images, because the file size will become too large too quickly. If camera data is needed, rosbag will have to be run separately in another terminal.]
+>[NOTE: This launch file will not record camera data, like RGB images and depth images, because the file size will become too large too quickly. If camera data is needed, rosbag will have to be run separately in another terminal.]
 
 ## Playback of rosbag
 
@@ -185,3 +194,21 @@ doxywizard
 ```
 
 Once doxywizard is open, select the workspace as the repository. Fill in the details as required and set the source code folder to the repository as well. Create a new folder in the repository and select that as the destination directory. Proceed with the default settings and generate the documentation.
+
+## Coverage
+
+The current code coverage for the project is 96.0%.
+
+```
+cd ~/catkin_ws/build
+lcov --directory . --capture --output-file coverage.info
+lcov --list coverage.info
+```
+
+This will output the coverage of each file in the terminal. To create an html file for the same, run the following command.
+
+```
+genhtml coverage.info --output-directory covout
+```
+
+This will store the `index.html` file in the folder `covout`.
